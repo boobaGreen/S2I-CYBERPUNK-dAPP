@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-orbitron: "Orbitron", sans-serif;
+  
+  /* Light Mode */
+  --color-primary-light: #101010; /* Nero carbone */
+  --color-secondary-light: #FFFFFF; /* Bianco puro */
+  --color-tertiary-light: #2a6d67; /* Grigio chiaro */
+
+  /* Dark Mode */
+  --color-primary-dark: #86EFAC; /* Ciano neon */
+  --color-secondary-dark: #101010; /* Nero carbone */
+  --color-tertiary-dark: #303030; /* Grigio scuro */
+}

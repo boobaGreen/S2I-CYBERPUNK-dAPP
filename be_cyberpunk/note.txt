@@ -1,0 +1,148 @@
+Let's use an environment variable to decide whether to use the private keys from the
+ environment variables or the default local signers for the deployment. This approach 
+ provides flexibility and can be easily controlled by setting the environment variable.
+
+
+
+npx hardhat run scripts/deploy.ts --network localhost
+
+Certainly! Here's an explanation of the design choices for the `CyberPunkBoutique` contract, which you can include in your README:
+
+---
+Adding a field to set the product as shipped and including tracking information can be useful for managing the delivery process. This will allow the owner to mark products as shipped and provide tracking details.
+
+Here's how you can update the contract to include these fields:
+
+```solidity
+
+
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.28;
+
+contract CyberPunkBoutique {
+    address public owner;
+    uint256 public productCount = 0;
+
+    struct Product {
+        uint256 id;
+        string name;
+        uint256 price;
+        string cid; // Content Identifier for IPFS
+        bool purchased;
+        bool shipped;
+        string trackingNumber;
+    }
+
+    mapping(uint256 => Product) public products;
+
+    event ProductCreated(uint256 id, string name, uint256 price, string cid, bool purchased);
+
+    event ProductPurchased(uint256 id, string name, uint256 price, address buyer, bool purchased);
+
+    event ProductShipped(uint256 id, string trackingNumber);
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    /**
+     * @notice Creates a new product
+     * @param _name The name of the product
+     * @param _price The price of the product in wei
+     * @param _cid The IPFS CID of the product metadata
+     */
+    function createProduct(string memory _name, uint256 _price, string memory _cid) public {
+        require(bytes(_name).length > 0, "Product name is required");
+        require(_price > 0, "Product price must be greater than zero");
+        require(bytes(_cid).length > 0, "Product CID is required");
+
+        productCount++;
+        products[productCount] = Product(productCount, _name, _price, _cid, false, false, "");
+
+        emit ProductCreated(productCount, _name, _price, _cid, false);
+    }
+
+    /**
+     * @notice Purchases a product
+     * @param _id The ID of the product to purchase
+     */
+    function purchaseProduct(uint256 _id) public payable {
+        Product storage _product = products[_id];
+
+        require(_product.id > 0 && _product.id <= productCount, "Product does not exist");
+        require(msg.value == _product.price, "Incorrect amount sent");
+        require(!_product.purchased, "Product already purchased");
+
+        // Update state before transferring funds
+        _product.purchased = true;
+        products[_id] = _product;
+
+        payable(owner).transfer(msg.value);
+
+        emit ProductPurchased(_id, _product.name, _product.price, msg.sender, true);
+    }
+
+    /**
+     * @notice Marks a product as shipped and sets the tracking number
+     * @param _id The ID of the product to mark as shipped
+     * @param _trackingNumber The tracking number of the shipment
+     */
+    function shipProduct(uint256 _id, string memory _trackingNumber) public {
+        require(msg.sender == owner, "Only the owner can mark products as shipped");
+
+        Product storage _product = products[_id];
+
+        require(_product.purchased, "Product must be purchased before it can be shipped");
+        require(!_product.shipped, "Product already shipped");
+
+        _product.shipped = true;
+        _product.trackingNumber = _trackingNumber;
+
+        emit ProductShipped(_id, _trackingNumber);
+    }
+}
+```
+
+### Key Changes:
+1. **Product Struct**: Added `shipped` and `trackingNumber` fields to track the shipping status and provide tracking information.
+2. **Events**: Added `ProductShipped` event to log when a product is shipped.
+3. **shipProduct Function**: New function to mark a product as shipped and set the tracking number. Only the owner can call this function.
+
+### Pros:
+- **Order Management**: Allows the owner to manage the shipping status of products and provide tracking information to buyers.
+- **Transparency**: Buyers can see the shipping status and tracking information, improving trust and satisfaction.
+
+### Cons:
+- **Complexity**: Adds complexity to the contract, requiring additional state management and checks.
+- **Gas Costs**: Increases gas costs due to additional state changes and logic.
+
+### README Update
+
+---
+
+## Design Choices for CyberPunkBoutique Contract
+
+### Unique Product IDs
+Each product in the `CyberPunkBoutique` contract is assigned a unique ID. This design choice aligns with the artisanal nature of Gianni's boutique, where each product is handcrafted and unique. Even if products are similar, they are treated as distinct items with their own unique identifiers.
+
+### IPFS Content Identifier (CID)
+The contract includes a `cid` field in the `Product` struct to store the IPFS Content Identifier. This allows for decentralized storage of product metadata, such as images and descriptions, on IPFS. Using IPFS ensures that the data is immutable and decentralized, enhancing the security and reliability of the product information.
+
+### No Quantity Management
+For simplicity, the contract does not include a `quantity` field to manage inventory. Each product is considered unique, and the contract does not handle multiple quantities of the same item. This decision simplifies the contract logic and aligns with the boutique's focus on unique, handcrafted items.
+
+### No Return Mechanism
+The contract does not include a mechanism for handling product returns. While adding a return feature could improve customer satisfaction, it also adds complexity to the contract. For this educational project, we have chosen to keep the contract simple and focus on the core functionality of creating and purchasing unique products.
+
+### Shipping Management
+The contract includes fields to manage the shipping status of products and provide tracking information. The owner can mark products as shipped and set the tracking number. This feature improves order management and transparency for buyers.
+
+### Events for Transparency
+The contract emits events for product creation (`ProductCreated`), product purchase (`ProductPurchased`), and product shipment (`ProductShipped`). These events provide transparency and allow for easy tracking of contract activities, which is essential for debugging and monitoring.
+
+### Owner Management
+The contract assigns the deployer as the owner, who is responsible for creating products and managing shipments. The owner receives the payments for purchased products. This design ensures that all transactions are securely managed by a single entity.
+
+---
+
+Feel free to include this explanation in your README to provide context for the design choices made in the `CyberPunkBoutique` contract.
