@@ -31,8 +31,16 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           modalSize='wide'
           showRecentTransactions={true}
           theme={{
-            lightMode: lightTheme({ accentColor: '#86EFAC', accentColorForeground: '#000000' }),
-            darkMode: darkTheme({ accentColor: '#86EFAC', accentColorForeground: '#000000' }),
+            lightMode: lightTheme({
+              accentColor: '#86EFAC',
+              accentColorForeground: '#000000',
+              overlayBlur: 'large',
+            }),
+            darkMode: darkTheme({
+              accentColor: '#86EFAC',
+              accentColorForeground: '#000000',
+              overlayBlur: 'large',
+            }),
           }}
         >
           <App />

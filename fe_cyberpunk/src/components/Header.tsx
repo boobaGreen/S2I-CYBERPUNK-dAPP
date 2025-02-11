@@ -16,10 +16,10 @@ export default function Header() {
     <Disclosure as='nav' className='bg-transparent'>
       {({}) => (
         <>
-          <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 py-8'>
+          <div className='mx-auto px-2 md:px-6 lg:px-8 py-6'>
             <div className='relative flex h-16 items-center justify-between'>
               <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
-                <DisclosureButton className='group relative inline-flex items-center justify-center rounded-md p-2 text-secondary-light dark:text-secondary-dark hover:bg-tertiary-light dark:hover:bg-tertiary-dark focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset'>
+                <DisclosureButton className='group relative inline-flex items-center justify-center rounded-md p-2 text-secondary-light  focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset'>
                   <span className='absolute -inset-0.5' />
                   <span className='sr-only'>Open main menu</span>
                   <Bars3Icon aria-hidden='true' className='block h-6 w-6 group-data-open:hidden' />
@@ -27,7 +27,7 @@ export default function Header() {
                 </DisclosureButton>
               </div>
               <div className='flex flex-1 items-center justify-center sm:items-stretch sm:justify-start'>
-                <div className='hidden sm:flex shrink-0 items-center'>
+                <div className='hidden sm:flex shrink-0 items-center hover:cursor-pointer'>
                   <Link to='/'>
                     <div className='flex items-center flex-col'>
                       <img alt='Your Company' src={logoSrc} className='h-8 w-auto' />
@@ -46,7 +46,7 @@ export default function Header() {
                           location.pathname === item.href
                             ? 'bg-primary-light dark:bg-primary-dark text-secondary-light dark:text-secondary-dark underline'
                             : 'text-secondary-dark dark:text-secondary-light hover:bg-tertiary-light dark:hover:bg-tertiary-dark',
-                          'rounded-md px-3 py-2 text-sm font-medium',
+                          'block rounded-md px-3 py-2 text-sm lg:text-md xl:text-lg font-bold',
                         )}
                         style={{ fontFamily: 'var(--font-orbitron)' }} // Orbitron font
                       >
@@ -55,7 +55,7 @@ export default function Header() {
                     ))}
                     <button
                       onClick={toggleTheme}
-                      className='rounded-md px-3 py-2 text-sm font-medium text-secondary-light dark:text-secondary-dark hover:bg-tertiary-light dark:hover:bg-tertiary-dark'
+                      className='rounded-md px-3 py-2 text-sm font-medium text-secondary-dark dark:text-secondary-light hover:bg-tertiary-light dark:hover:bg-tertiary-dark'
                     >
                       {theme === 'dark' ? (
                         <SunIcon className='h-6 w-6 text-secondary-light' />
@@ -72,8 +72,8 @@ export default function Header() {
             </div>
           </div>
 
-          <DisclosurePanel className='absolute top-16 left-0 right-0 bg-secondary-dark z-50 sm:hidden'>
-            <div className='space-y-1 px-2 pt-2 pb-3'>
+          <DisclosurePanel className='absolute top-16 left-0 right-0 bg-secondary-dark  z-50 sm:hidden'>
+            <div className='space-y-1 px-2 pt-2 pb-3 mt-6'>
               {navigation.map((item) => (
                 <DisclosureButton
                   key={item.name}
@@ -82,8 +82,8 @@ export default function Header() {
                   aria-current={location.pathname === item.href ? 'page' : undefined}
                   className={classNames(
                     location.pathname === item.href
-                      ? 'bg-primary-light dark:bg-primary-dark  underline'
-                      : ' hover:bg-tertiary-light dark:hover:bg-tertiary-dark',
+                      ? 'bg-primary-light dark:bg-primary-dark text-secondary-light dark:text-secondary-dark underline'
+                      : 'text-secondary-light dark:text-secondary-dark hover:bg-tertiary-light dark:hover:bg-tertiary-dark',
                     'block rounded-md px-3 py-2 text-base font-medium',
                   )}
                   style={{ fontFamily: 'var(--font-orbitron)' }} // Orbitron font
@@ -94,7 +94,7 @@ export default function Header() {
               <DisclosureButton
                 as='button'
                 onClick={toggleTheme}
-                className='block rounded-md px-3 py-2 text-base font-medium text-secondary-light dark:text-secondary-dark hover:bg-tertiary-light dark:hover:bg-tertiary-dark'
+                className='block rounded-md px-3 py-2 text-base font-medium text-secondary-light dark:text-secondary-dark'
               >
                 {theme === 'dark' ? (
                   <SunIcon className='h-6 w-6 text-secondary-light' />

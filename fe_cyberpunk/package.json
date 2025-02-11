@@ -11,14 +11,21 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.5",
+    "axios": "^1.7.9",
+    "ethers": "^6.13.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3",
     "@eslint/js": "^9.19.0",
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
+    "@rainbow-me/rainbowkit": "^2.2.3",
+    "@tanstack/react-query": "^5.66.0",
+    "@types/axios": "^0.9.36",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^8.23.0",
     "@typescript-eslint/parser": "^8.23.0",
     "@vitejs/plugin-react": "^4.3.4",
@@ -31,16 +38,12 @@
     "globals": "^15.14.0",
     "postcss": "^8.5.1",
     "prettier": "^3.5.0",
+    "react-router-dom": "^7.1.5",
     "tailwindcss": "^4.0.5",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.22.0",
-    "vite": "^6.1.0",
-    "@headlessui/react": "^2.2.0",
-    "@heroicons/react": "^2.2.0",
-    "@rainbow-me/rainbowkit": "^2.2.3",
-    "@tanstack/react-query": "^5.66.0",
-    "react-router-dom": "^7.1.5",
     "viem": "^2.23.0",
+    "vite": "^6.1.0",
     "wagmi": "^2.14.11"
   }
 }

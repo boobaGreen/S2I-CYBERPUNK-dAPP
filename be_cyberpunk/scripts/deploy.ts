@@ -1,16 +1,10 @@
 import hre from "hardhat";
+import CyberPunkModule from "../ignition/modules/CyperPunk";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 async function main() {
-    const CyberPunkBoutique = await hre.ethers.getContractFactory("CyberPunkBoutique");
-    const cyberPunkBoutique = await CyberPunkBoutique.deploy();
-
-
-
-    console.log(`CyberPunkBoutique deployed to: ${cyberPunkBoutique.address}`);
-
     const chainId = (await hre.ethers.provider.getNetwork()).chainId;
     console.log("Chain ID:", chainId);
 
@@ -36,7 +30,7 @@ async function main() {
     const initialBalance = hre.ethers.parseEther("100"); // 100 ETH
     const hexBalance = `0x${initialBalance.toString(16)}`;
 
-    if (Number(chainId) === 31337) { // Local Hardhat network
+    if (Number(chainId) === 1337) { // Local Hardhat network
         await hre.ethers.provider.send("hardhat_setBalance", [
             deployer.address,
             hexBalance,
@@ -52,6 +46,13 @@ async function main() {
         );
         console.log(`Assigned ${initialBalance} ETH to client: ${client.address}`);
     }
+
+    const { cyberPunkBoutique } = await hre.ignition.deploy(CyberPunkModule, {
+        defaultSender: deployer.address,
+        // Include the deployer and client addresses
+    });
+
+    console.log(`CyberPunkBoutique deployed to: ${cyberPunkBoutique.target}`);
 }
 
 main().catch((error) => {

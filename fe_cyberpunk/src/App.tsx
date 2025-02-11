@@ -13,12 +13,8 @@ function App() {
         <div className='absolute inset-0 bg-tertiary-light  dark:bg-tertiary-dark opacity-90 '></div>
         <div className='relative z-10'>
           <Header />
-          <div className='w-full flex justify-center items-center py-8 mb-6 lg:text-7xl md:text-5xl text-3xl'>
-            <h1 className='text-secondary-dark dark:text-secondary-light'>CYBERPUNK SHOP</h1>
-          </div>
-
           <Routes>
-            <Route path='/' element={<Home />} />y
+            <Route path='/' element={<Home />} />
             <Route path='products' element={<Products />} />
             <Route path='my-orders' element={<MyOrders />} />
             <Route path='about-us' element={<AboutUs />} />
