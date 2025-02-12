@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useAddProductForm from '../hooks/useAddProductForm';
-import useUploadToIPFS from '../hooks/useUploadToIPFS';
+import { pinata } from '../utils/config';
 
 interface AddProductModalProps {
   closeModal: () => void;
@@ -9,20 +9,47 @@ interface AddProductModalProps {
 const AddProductModal: React.FC<AddProductModalProps> = ({ closeModal }) => {
   const { values, errors, isSubmitting, message, handleChange, handleSubmit, setValues } =
     useAddProductForm();
-  const { imageCID, loading, error, handleImageUpload } = useUploadToIPFS();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [url, setUrl] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isProductAdded, setIsProductAdded] = useState<boolean>(false);
 
-  // Aggiorna il campo CID nel form quando l'immagine viene caricata
-  React.useEffect(() => {
-    if (imageCID) {
-      setValues((prevValues: any) => ({ ...prevValues, cid: imageCID }));
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedFile(event.target?.files?.[0] || null);
+  };
+
+  const handleImageUpload = async () => {
+    if (!selectedFile) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const upload = await pinata.upload.file(selectedFile);
+      console.log(upload);
+
+      const ipfsUrl = await pinata.gateways.convert(upload.IpfsHash);
+      setUrl(ipfsUrl);
+      setValues((prevValues: any) => ({ ...prevValues, cid: upload.IpfsHash }));
+    } catch (err) {
+      setError('Failed to upload image to Pinata');
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-  }, [imageCID, setValues]);
+  };
 
+  const handleProductSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    await handleSubmit(event);
+    setIsProductAdded(true); // Set isProductAdded to true when the product is successfully added
+  };
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-transparent bg-opacity-50'>
       <div className='bg-secondary-light dark:bg-secondary-dark p-8 rounded-md shadow-md'>
         <h2 className='text-2xl mb-4 text-primary-light dark:text-primary-dark'>Add New Product</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleProductSubmit}>
           <div className='mb-4'>
             <label className='block text-sm font-medium text-primary-light dark:text-primary-dark'>
               Product Name
@@ -46,7 +73,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ closeModal }) => {
               name='price'
               value={values.price}
               onChange={handleChange}
-              step='0.001' // Permette valori decimali
+              step='0.000000000000000001' // Permette valori decimali
               min='0' // Permette solo valori positivi
               className='mt-1 block w-full border border-tertiary-light dark:border-tertiary-dark rounded-md shadow-sm'
             />
@@ -54,12 +81,35 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ closeModal }) => {
           </div>
           <div className='mb-4'>
             <label className='block text-sm font-medium text-primary-light dark:text-primary-dark'>
+              CID (Content Identifier)
+            </label>
+            <input
+              type='text'
+              name='cid'
+              value={values.cid}
+              onChange={handleChange}
+              placeholder='Enter CID or upload an image'
+              className='mt-1 block w-full border border-tertiary-light dark:border-tertiary-dark rounded-md shadow-sm'
+            />
+            {errors.cid && <p className='text-red-500 text-sm'>{errors.cid}</p>}
+          </div>
+          <div className='mb-4'>
+            <label className='block text-sm font-medium text-primary-light dark:text-primary-dark'>
               Upload Image
             </label>
-            <input type='file' onChange={handleImageUpload} className='mt-1 block w-full' />
+            <input type='file' onChange={changeHandler} className='mt-1 block w-full' />
+            {!isProductAdded && (
+              <button
+                type='button'
+                onClick={handleImageUpload}
+                className='mt-2 bg-primary-dark text-primary-light py-2 px-4 rounded-md'
+              >
+                Upload Image
+              </button>
+            )}
             {loading && <p className='text-sm'>Uploading...</p>}
             {error && <p className='text-red-500 text-sm'>{error}</p>}
-            {imageCID && <p className='text-sm'>Image CID: {imageCID}</p>}
+            {url && <img src={url} alt='uploaded image' className='mt-2' />}
           </div>
           <div className='flex justify-end'>
             <button
@@ -67,15 +117,17 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ closeModal }) => {
               onClick={closeModal}
               className='mr-4 bg-tertiary-light dark:bg-tertiary-dark text-secondary-light py-2 px-4 rounded-md'
             >
-              Cancel
+              {isProductAdded ? 'Close' : 'Cancel'}
             </button>
-            <button
-              type='submit'
-              disabled={isSubmitting}
-              className='bg-primary-dark text-primary-light py-2 px-4 rounded-md'
-            >
-              {isSubmitting ? 'Adding...' : 'Add Product'}
-            </button>
+            {!isProductAdded && (
+              <button
+                type='submit'
+                disabled={isSubmitting}
+                className='bg-primary-dark text-primary-light py-2 px-4 rounded-md'
+              >
+                {isSubmitting ? 'Adding...' : 'Add Product'}
+              </button>
+            )}
           </div>
         </form>
         {message && <p className='mt-4 text-center'>{message}</p>}

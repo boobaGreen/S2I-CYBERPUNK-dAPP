@@ -29,21 +29,24 @@ async function main() {
     // Ottieni il contratto CyberPunkBoutique distribuito con il provider specifico
     const contract = new ethers.Contract(contractAddress, CyberPunkBoutique.abi, owner);
 
-    // Dati del prodotto
-    const productName = 'CyberPunk T-Shirt 2 ';
-    const productPrice = ethers.parseUnits('2.5', 'ether'); // 1 ETH
-    const productCID = 'bafkreidfc5n3foviommqpwiz3u6bhwsyfvdjv5ej6zbqubjphdpaumevum';
+    // Leggi i dati dei prodotti dal file JSON
+    const productsFilePath = path.join(__dirname, './exampleData/products.json');
+    const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
 
-    // Aggiungi il prodotto
-    const tx = await contract.createProduct(productName, productPrice, productCID);
-    await tx.wait();
+    for (const product of products) {
+        const { name, price, cid } = product;
+        const productPrice = ethers.parseUnits(price, 'ether');
 
-    console.log(`Product added successfully with transaction hash: ${tx.hash}`);
+        // Aggiungi il prodotto
+        const tx = await contract.createProduct(name, productPrice, cid);
+        await tx.wait();
 
-    // Leggi il prodotto appena aggiunto
+        console.log(`Product ${name} added successfully with transaction hash: ${tx.hash}`);
+    }
+
+    // Leggi il numero totale di prodotti
     const productCount = await contract.productCount();
-    const newProduct = await contract.products(productCount);
-    console.log(`Newly added product:`, newProduct);
+    console.log(`Total products: ${productCount}`);
 }
 
 main().catch((error) => {

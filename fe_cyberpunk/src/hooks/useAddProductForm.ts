@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ethers } from 'ethers';
-import CyberPunkBoutique from '../../../be_cyberpunk/artifacts/contracts/CyberPunk.sol/CyberPunkBoutique.json';
-import loadDeployedAddresses from '../utils/loadDeployedAddresses';
+import { getContractInstance } from '../utils/getContractInstance';
 
 interface ProductFormValues {
     name: string;
@@ -39,21 +38,20 @@ const useAddProductForm = () => {
         if (Object.keys(validationErrors).length === 0) {
             setIsSubmitting(true);
             try {
-                const provider = new ethers.BrowserProvider(window.ethereum);
-                const signer = await provider.getSigner();
-
-                // Ottieni la rete corrente
-                const network = await provider.getNetwork();
-                const deployedAddresses = loadDeployedAddresses(Number(network.chainId));
-                const contractAddress = deployedAddresses["CyberPunkModule#CyberPunkBoutique"];
-
-                const contract = new ethers.Contract(contractAddress, CyberPunkBoutique.abi, signer);
+                const { contract, signer, network, provider } = await getContractInstance('CyberPunkModule#CyberPunkBoutique');
 
                 // Converti il prezzo in wei
                 const priceInWei = ethers.parseUnits(values.price.toString(), 'ether');
 
-                // Crea il prodotto senza specificare il nonce
-                const transaction = await contract.createProduct(values.name, priceInWei, values.cid);
+                let transaction;
+                if (Number(network.chainId) === 1337) {
+                    // Ottieni il nonce corrente per la rete locale
+                    const nonce = await provider.getTransactionCount(signer.getAddress());
+                    transaction = await contract.createProduct(values.name, priceInWei, values.cid, { nonce });
+                } else {
+                    // Non specificare il nonce per Sepolia e Mainnet
+                    transaction = await contract.createProduct(values.name, priceInWei, values.cid);
+                }
 
                 await transaction.wait();
 

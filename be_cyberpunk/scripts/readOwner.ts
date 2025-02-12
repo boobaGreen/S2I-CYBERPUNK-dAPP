@@ -30,6 +30,9 @@ async function main() {
     const contract = new ethers.Contract(contractAddress, CyberPunkBoutique.abi, provider);
     console.log('Contract:', contract);
 
+    // Stampa l'indirizzo del contratto
+    console.log(`Contract address: ${contract.target}`);
+
     // Ottieni l'indirizzo del proprietario
     try {
         const owner = await contract.owner();

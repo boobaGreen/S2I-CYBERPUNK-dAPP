@@ -27,7 +27,7 @@ async function main() {
 
     console.log(`Deployer address: ${deployer.address}`);
 
-    const initialBalance = hre.ethers.parseEther("100"); // 100 ETH
+    const initialBalance = hre.ethers.parseEther("45"); // 100 ETH
     const hexBalance = `0x${initialBalance.toString(16)}`;
 
     if (Number(chainId) === 1337) { // Local Hardhat network
