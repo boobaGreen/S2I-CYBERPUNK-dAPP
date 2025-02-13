@@ -9,6 +9,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
   },
-  "include": ["./scripts", "./test",  "utils"],
+  "include": ["./scripts", "./test",  "utils", "typechain-types"],
   "files": ["./hardhat.config.ts"]
 }

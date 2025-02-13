@@ -1,1 +1,18 @@
 npx hardhat run scripts/sendEth.ts --network localhost
+
+npx hardhat purchaseProduct --productid 2 --network localhost
+
+npx hardhat run scripts/checkBalances.ts --network localhost
+
+npx hardhat run scripts/shipProduct.ts --network localhost
+
+npx hardhat run scripts/deploy.ts --network localhost
+
+npm install --save-dev solidity-coverage
+
+npx hardhat coverage
+
+npx hardhat verify --network sepolia DEPLOYED_CONTRACT_ADDRESS "Constructor argument 1"
+npx hardhat verify --network sepolia 0x9257Bd90311a760621a1D880751bCEC9F240c29B
+
+0x9257Bd90311a760621a1D880751bCEC9F240c29B

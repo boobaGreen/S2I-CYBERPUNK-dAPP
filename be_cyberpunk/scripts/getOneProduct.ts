@@ -4,14 +4,14 @@ import * as path from 'path';
 import dotenv from 'dotenv';
 import CyberPunkBoutique from '../artifacts/contracts/CyberPunk.sol/CyberPunkBoutique.json';
 
-// Carica le variabili di ambiente dal file .env
+// Load environment variables from .env file
 dotenv.config();
 
 async function main() {
-    // Ottieni il chain ID della rete corrente
+    // Get the chain ID of the current network
     const chainId = (await ethers.provider.getNetwork()).chainId;
 
-    // Leggi l'indirizzo del contratto dal file JSON specifico per la rete
+    // Read the contract address from the JSON file specific to the network
     const addressesFilePath = path.join(
         __dirname,
         `../ignition/deployments/chain-${chainId}`,
@@ -23,24 +23,30 @@ async function main() {
     const contractAddress = addresses["CyberPunkModule#CyberPunkBoutique"];
     console.log('CyberPunkBoutique address: ', contractAddress);
 
-    // Ottieni il provider (signer) specifico
+    // Get the specific provider (signer)
     const provider = ethers.provider;
-    
-    // Ottieni il contratto CyberPunkBoutique distribuito con il provider specifico
+
+    // Get the deployed CyberPunkBoutique contract with the specific provider
     const contract = new ethers.Contract(contractAddress, CyberPunkBoutique.abi, provider);
     console.log('Contract:', contract);
-    // Ottieni il numero totale di prodotti
-    try {
-        const productCount = await contract.productCount();
-        console.log(`Total products: ${productCount.toString()}`);
 
-        // Verifica tutti i prodotti registrati
-        for (let i = 1; i <= productCount; i++) {
-            const product = await contract.products(i);
-            console.log(`Product ${i}:`, product);
-        }
+    // Define the product ID (hardcoded)
+    const productId = 3; // Replace with the actual product ID
+
+    // Retrieve the product details
+    try {
+        const product = await contract.products(productId);
+        console.log(`Product ${productId}:`, product);
+
+        // Display the product details
+        console.log(`Product ID: ${product.id}`);
+        console.log(`Name: ${product.name}`);
+        console.log(`Price: ${ethers.formatUnits(product.price, 'ether')} ETH`);
+        console.log(`CID: ${product.cid}`);
+        console.log(`Tracking Number: ${product.trackingNumber}`);
+        console.log(`State: ${product.state}`);
     } catch (error) {
-        console.error('Error fetching product count:', error);
+        console.error(`Error fetching product ${productId}:`, error);
     }
 }
 

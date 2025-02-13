@@ -4,14 +4,14 @@ import * as path from 'path';
 import dotenv from 'dotenv';
 import CyberPunkBoutique from '../artifacts/contracts/CyberPunk.sol/CyberPunkBoutique.json';
 
-// Carica le variabili di ambiente dal file .env
+// Load environment variables from .env file
 dotenv.config();
 
 async function main() {
-    // Ottieni il chain ID della rete corrente
+    // Get the chain ID of the current network
     const chainId = (await ethers.provider.getNetwork()).chainId;
 
-    // Leggi l'indirizzo del contratto dal file JSON specifico per la rete
+    // Read the contract address from the JSON file specific to the network
     const addressesFilePath = path.join(
         __dirname,
         `../ignition/deployments/chain-${chainId}`,
@@ -23,27 +23,29 @@ async function main() {
     const contractAddress = addresses["CyberPunkModule#CyberPunkBoutique"];
     console.log('CyberPunkBoutique address: ', contractAddress);
 
-    // Ottieni il provider (signer) specifico
+    // Get the specific provider (signer)
     const [owner] = await ethers.getSigners();
 
-    // Ottieni il contratto CyberPunkBoutique distribuito con il provider specifico
+    // Get the deployed CyberPunkBoutique contract with the specific provider
     const contract = new ethers.Contract(contractAddress, CyberPunkBoutique.abi, owner);
 
-    // Dati del prodotto
-    const productName = 'CyberPunk T-Shirt chippy';
-    const productPrice = ethers.parseUnits('0.00001', 'ether'); // 1 ETH
-    const productCID = 'bafkreidfc5n3foviommqpwiz3u6bhwsyfvdjv5ej6zbqubjphdpaumevum';
-
-    // Aggiungi il prodotto
-    const tx = await contract.createProduct(productName, productPrice, productCID);
-    await tx.wait();
-
-    console.log(`Product added successfully with transaction hash: ${tx.hash}`);
-
-    // Leggi il prodotto appena aggiunto
+    // Get the total number of products
     const productCount = await contract.productCount();
-    const newProduct = await contract.products(productCount);
-    console.log(`Newly added product:`, newProduct);
+    console.log(`Total products: ${productCount.toString()}`);
+
+    // Verify all registered products
+    for (let i = 1; i <= productCount; i++) {
+        const product = await contract.products(i);
+        console.log(`Product ${i}:`, product);
+
+        // Display the product details
+        console.log(`Product ID: ${product.id}`);
+        console.log(`Name: ${product.name}`);
+        console.log(`Price: ${ethers.formatUnits(product.price, 'ether')} ETH`);
+        console.log(`CID: ${product.cid}`);
+        console.log(`Tracking Number: ${product.trackingNumber}`);
+        console.log(`State: ${product.state}`);
+    }
 }
 
 main().catch((error) => {

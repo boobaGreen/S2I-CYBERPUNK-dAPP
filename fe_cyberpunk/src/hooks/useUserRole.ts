@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi';
 import { getContractInstance } from '../utils/getContractInstance';
 
 const useUserRole = () => {
-    const { isConnected, isDisconnected } = useAccount();
+    const { address, isConnected, isDisconnected } = useAccount();
     const [isVendor, setIsVendor] = useState(false);
     const [loading, setLoading] = useState(true);
 
@@ -34,7 +34,7 @@ const useUserRole = () => {
         fetchOwnerAddress();
     }, [isConnected]);
 
-    return { isVendor, isClient: isConnected, isDisconnected, loading };
+    return { isVendor, isClient: isConnected && !isVendor, isDisconnected, loading };
 };
 
 export default useUserRole;

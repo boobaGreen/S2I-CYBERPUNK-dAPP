@@ -3,6 +3,9 @@ import "@nomicfoundation/hardhat-toolbox";
 import "@nomicfoundation/hardhat-verify"; // only for manual verify not necessary for Ignition
 import "@nomicfoundation/hardhat-ignition-ethers";
 import "dotenv/config";
+import "./tasks/purchaseProduct";
+import "@nomicfoundation/hardhat-verify";
+
 
 const config: HardhatUserConfig = {
   solidity: "0.8.28",

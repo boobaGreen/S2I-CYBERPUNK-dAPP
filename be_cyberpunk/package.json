@@ -12,7 +12,8 @@
     "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@nomicfoundation/hardhat-verify": "^2.0.12",
-    "hardhat": "^2.22.18"
+    "hardhat": "^2.22.18",
+    "solidity-coverage": "^0.8.14"
   },
   "dependencies": {
     "dotenv": "^16.4.7"

@@ -26,15 +26,17 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ closeModal }) => {
     setError(null);
 
     try {
+      console.log('Uploading image to Pinata...');
       const upload = await pinata.upload.file(selectedFile);
-      console.log(upload);
+      console.log('Upload response:', upload);
 
       const ipfsUrl = await pinata.gateways.convert(upload.IpfsHash);
+      console.log('IPFS URL:', ipfsUrl);
       setUrl(ipfsUrl);
       setValues((prevValues: any) => ({ ...prevValues, cid: upload.IpfsHash }));
     } catch (err) {
       setError('Failed to upload image to Pinata');
-      console.error(err);
+      console.error('Error uploading image:', err);
     } finally {
       setLoading(false);
     }
@@ -45,9 +47,10 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ closeModal }) => {
     await handleSubmit(event);
     setIsProductAdded(true); // Set isProductAdded to true when the product is successfully added
   };
+
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-transparent bg-opacity-50'>
-      <div className='bg-secondary-light dark:bg-secondary-dark p-8 rounded-md shadow-md'>
+      <div className='bg-secondary-light dark:bg-secondary-dark p-8 rounded-md shadow-md max-w-lg w-full'>
         <h2 className='text-2xl mb-4 text-primary-light dark:text-primary-dark'>Add New Product</h2>
         <form onSubmit={handleProductSubmit}>
           <div className='mb-4'>
@@ -109,7 +112,11 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ closeModal }) => {
             )}
             {loading && <p className='text-sm'>Uploading...</p>}
             {error && <p className='text-red-500 text-sm'>{error}</p>}
-            {url && <img src={url} alt='uploaded image' className='mt-2' />}
+            {url && (
+              <div className='mt-2 max-w-xs'>
+                <img src={url} alt='uploaded image' className='w-full h-auto object-contain' />
+              </div>
+            )}
           </div>
           <div className='flex justify-end'>
             <button
