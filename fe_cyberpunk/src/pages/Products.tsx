@@ -43,7 +43,7 @@ export default function Products() {
           <ConnectButton />
         </div>
       )}
-      // provvisorio x cv cesenatico ***************************************
+      {/* // provvisorio x cv cesenatico *************************************** */}
       {/* {isVendor && ( */}
       {true && (
         <div className='flex justify-center p-4'>
