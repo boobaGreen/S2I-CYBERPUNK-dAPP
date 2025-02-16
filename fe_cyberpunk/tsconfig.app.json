@@ -20,7 +20,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* JSON Modules */
+    "resolveJsonModule": true, // Aggiungi questa opzione
+    "esModuleInterop": true // Aggiungi questa opzione se non è già presente
   },
-  "include": ["src"]
+  "include": ["src", "declarations.d.ts"] // Includi il file di dichiarazione
 }
