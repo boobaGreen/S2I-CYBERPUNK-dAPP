@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi';
 import { getContractInstance } from '../utils/getContractInstance';
 
 const useUserRole = () => {
-    const { address, isConnected, isDisconnected } = useAccount();
+    const { isConnected, isDisconnected } = useAccount();
     const [isVendor, setIsVendor] = useState(false);
     const [loading, setLoading] = useState(true);
 
@@ -19,7 +19,7 @@ const useUserRole = () => {
 
                 // Ottieni l'indirizzo del proprietario
                 const ownerAddress = await contract.owner();
-       
+
 
                 // Confronta l'indirizzo del proprietario con l'indirizzo dell'utente corrente
                 const userAddress = await signer.getAddress();

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Gallery from '../components/Gallery';
-import useUserRole from '../hooks/useUserRole';
+
 import Button from '../components/Button';
 import AddProductModal from '../components/AddProductModal';
 import { IProduct } from '../types/IProduct';
@@ -9,8 +9,8 @@ import { useAccount } from 'wagmi';
 import { fetchProducts, handleBuy } from '../utils/productUtils';
 
 export default function Products() {
-  const { isVendor } = useUserRole();
-  const { isConnected, chain } = useAccount();
+  // const { isVendor } = useUserRole();
+  const { isConnected } = useAccount();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [products, setProducts] = useState<IProduct[]>([]);
