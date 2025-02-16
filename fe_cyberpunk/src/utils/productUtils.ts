@@ -15,8 +15,8 @@ export const fetchProducts = async (): Promise<IProduct[]> => {
     try {
         CyberPunkBoutique = await loadABI();
         const provider = new ethers.BrowserProvider(window.ethereum);
-        const network = await provider.getNetwork();
-        const deployedAddresses = loadDeployedAddresses(Number(network.chainId));
+        // const network = await provider.getNetwork();
+        // const deployedAddresses = loadDeployedAddresses(Number(network.chainId));
         // const contractAddress = deployedAddresses['CyberPunkModule#CyberPunkBoutique'];
         const contractAddress = "0xea1A14F7f4938b955413d3d274c5720794419Dea";
 
