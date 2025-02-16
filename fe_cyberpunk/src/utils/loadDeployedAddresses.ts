@@ -6,7 +6,7 @@ const deployedAddressesLocal = {
 };
 
 const deployedAddressesSepolia = {
-    "CyberPunkModule#CyberPunkBoutique": "cb27d7709ddb02f3742496ba6218deas"
+    "CyberPunkModule#CyberPunkBoutique": "cb27d7709ddb02f3742496ba6218dea"
 };
 
 const loadDeployedAddresses = (chainId: number) => {
