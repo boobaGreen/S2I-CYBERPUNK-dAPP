@@ -9,12 +9,12 @@ export const getContractInstance = async (contractName: string) => {
 
     // Ottieni la rete corrente
     const network = await provider.getNetwork();
- 
+
     const contractAddress = await getContractAddress(Number(network.chainId), contractName);
 
     const contractABI = getContractABI();
     const contract = new ethers.Contract(contractAddress, (await contractABI).abi, signer);
-
+    console.log("contract", contract);
 
     return { contract, signer, network, provider };
 };
