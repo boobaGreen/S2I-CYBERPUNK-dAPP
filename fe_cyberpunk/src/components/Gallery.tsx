@@ -15,12 +15,6 @@ const Gallery = ({ products, onBuy, isBuyButtonVisible }: GalleryProps) => {
 
         <div className='grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8'>
           {products.map((product) => {
-            console.log('product.state', product.state);
-            console.log('product.state===0', product.state === 0);
-            console.log(
-              'product.state===ProductState.Avaiable',
-              product.state === ProductState.Available,
-            );
             return (
               <div key={product.id} className='group'>
                 <div>
