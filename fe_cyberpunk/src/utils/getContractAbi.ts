@@ -1,6 +1,6 @@
 export const getContractABI = async () => {
   if (import.meta.env.MODE === 'production') {
-    return
+    return await import('./abis/CyberPunkBoutique.json');
   }
   if (import.meta.env.MODE === 'development') {
     return await import('../../../be_cyberpunk/artifacts/contracts/CyberPunk.sol/CyberPunkBoutique.json');
