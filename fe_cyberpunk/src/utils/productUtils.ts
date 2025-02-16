@@ -6,14 +6,17 @@ import { getContractInstance } from '../utils/getContractInstance';
 
 let CyberPunkBoutique: any;
 
-if (import.meta.env.MODE === 'development') {
-    CyberPunkBoutique = require('../../../be_cyberpunk/artifacts/contracts/CyberPunk.sol/CyberPunkBoutique.json');
-} else {
-    CyberPunkBoutique = require('./abis/CyberPunkBoutique.json');
-}
+const loadABI = async () => {
+    if (import.meta.env.MODE === 'development') {
+        return await import('../../../be_cyberpunk/artifacts/contracts/CyberPunk.sol/CyberPunkBoutique.json');
+    } else {
+        return await import('./abis/CyberPunkBoutique.json');
+    }
+};
 
 export const fetchProducts = async (): Promise<IProduct[]> => {
     try {
+        CyberPunkBoutique = await loadABI();
         const provider = new ethers.BrowserProvider(window.ethereum);
         const network = await provider.getNetwork();
         const deployedAddresses = loadDeployedAddresses(Number(network.chainId));
@@ -53,6 +56,7 @@ export const fetchProducts = async (): Promise<IProduct[]> => {
 
 export const handleBuy = async (productId: number, price: string, products: IProduct[], setProducts: (products: IProduct[]) => void) => {
     try {
+        CyberPunkBoutique = await loadABI();
         const { contract } = await getContractInstance('CyberPunkModule#CyberPunkBoutique');
         const tx = await contract.purchaseProduct(productId, {
             value: ethers.parseUnits(price, 'ether'),
