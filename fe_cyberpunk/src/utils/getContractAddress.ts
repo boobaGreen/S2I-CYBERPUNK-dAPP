@@ -1,6 +1,6 @@
 // import loadDeployedAddresses from './loadDeployedAddresses';
 
-export const getContractAddress = async (networkChainId: number, contractName: string) => {
+export const getContractAddress = async (_networkChainId: number, _contractName: string) => {
     let contractAddress;
     contractAddress = "0xea1A14F7f4938b955413d3d274c5720794419Dea";
 
