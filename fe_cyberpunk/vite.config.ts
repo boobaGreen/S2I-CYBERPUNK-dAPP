@@ -8,7 +8,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       onwarn(warning, warn) {
-        if (warning.code === 'THIS_IS_UNDEFINED') {
+        // Ignore specific warnings related to comments
+        if (warning.message.includes('contains an annotation that Rollup cannot interpret')) {
           return;
         }
         warn(warning);
