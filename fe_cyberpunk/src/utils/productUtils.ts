@@ -3,15 +3,12 @@ import loadDeployedAddresses from './loadDeployedAddresses';
 import { IProduct } from '../types/IProduct';
 import { pinata } from '../utils/config';
 import { getContractInstance } from '../utils/getContractInstance';
+import { getContractABI } from './getContractAbi';
 
 let CyberPunkBoutique: any;
 
 const loadABI = async () => {
-    if (import.meta.env.MODE === 'development') {
-        return await import('../../../be_cyberpunk/artifacts/contracts/CyberPunk.sol/CyberPunkBoutique.json');
-    } else {
-        return await import('./abis/CyberPunkBoutique.json');
-    }
+    return await getContractABI();
 };
 
 export const fetchProducts = async (): Promise<IProduct[]> => {
