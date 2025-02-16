@@ -20,10 +20,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    /* JSON Modules */
-    "resolveJsonModule": true // Aggiungi questa opzione
+    "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "declarations.d.ts"] // Includi il file di dichiarazione
+  "include": ["src"]
 }
