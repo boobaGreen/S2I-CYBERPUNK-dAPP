@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import loadDeployedAddresses from './loadDeployedAddresses';
+// import loadDeployedAddresses from './loadDeployedAddresses';
 import { IProduct } from '../types/IProduct';
 import { pinata } from '../utils/config';
 import { getContractInstance } from '../utils/getContractInstance';
