@@ -20,6 +20,6 @@ export const getContractAddress = async (networkChainId: number, contractName: s
     if (!contractAddress) {
         throw new Error('Contract address not found');
     }
-
+    console.log("contractAddress--final:", contractAddress)
     return contractAddress;
 };
