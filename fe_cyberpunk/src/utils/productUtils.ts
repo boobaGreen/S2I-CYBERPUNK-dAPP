@@ -1,9 +1,16 @@
 import { ethers } from 'ethers';
-import CyberPunkBoutique from '../../../be_cyberpunk/artifacts/contracts/CyberPunk.sol/CyberPunkBoutique.json';
 import loadDeployedAddresses from './loadDeployedAddresses';
 import { IProduct } from '../types/IProduct';
 import { pinata } from '../utils/config';
 import { getContractInstance } from '../utils/getContractInstance';
+
+let CyberPunkBoutique: any;
+
+if (import.meta.env.MODE === 'development') {
+    CyberPunkBoutique = require('../../../be_cyberpunk/artifacts/contracts/CyberPunk.sol/CyberPunkBoutique.json');
+} else {
+    CyberPunkBoutique = require('./abis/CyberPunkBoutique.json');
+}
 
 export const fetchProducts = async (): Promise<IProduct[]> => {
     try {
