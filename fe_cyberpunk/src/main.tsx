@@ -1,18 +1,12 @@
 import { Buffer } from 'buffer';
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-
 import { WagmiProvider } from 'wagmi';
 import { sepolia } from 'wagmi/chains';
-
 import '@rainbow-me/rainbowkit/styles.css';
 import { RainbowKitProvider, darkTheme, lightTheme } from '@rainbow-me/rainbowkit';
-
 import { rainbowKitConfig } from './config/rainbowKitConfig'; // Importa la configurazione
-
 import App from './App';
 import './index.css';
 
@@ -32,13 +26,13 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           showRecentTransactions={true}
           theme={{
             lightMode: lightTheme({
-              accentColor: '#86EFAC',
-              accentColorForeground: '#000000',
+              accentColor: 'var(--color-secondary-light)',
+              accentColorForeground: 'var(--color-primary-light)',
               overlayBlur: 'large',
             }),
             darkMode: darkTheme({
-              accentColor: '#86EFAC',
-              accentColorForeground: '#000000',
+              accentColor: 'var(--color-secondary-dark)',
+              accentColorForeground: 'var(--color-primary-dark)',
               overlayBlur: 'large',
             }),
           }}

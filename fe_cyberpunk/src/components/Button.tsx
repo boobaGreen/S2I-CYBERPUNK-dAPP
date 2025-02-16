@@ -9,7 +9,7 @@ interface ButtonProps {
 
 export default function Button({ to, onClick, children }: ButtonProps) {
   const buttonClass =
-    'bg-primary-dark text-primary-light py-2 px-4 rounded-md text-center text-2xl mb-4 hover:bg-primary-light hover:text-primary-dark transition duration-300';
+    'dark:bg-primary-dark bg-primary-light dark:text-primary-light text-secondary-light py-2 px-4 rounded-md text-center text-2xl mb-4 hover:bg-primary-light hover:text-primary-dark transition duration-300';
 
   if (to) {
     return (

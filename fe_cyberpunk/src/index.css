@@ -8,12 +8,18 @@
   --font-orbitron: "Orbitron", sans-serif;
   
   /* Light Mode */
-  --color-primary-light: #101010; /* Nero carbone */
-  --color-secondary-light: #FFFFFF; /* Bianco puro */
-  --color-tertiary-light: #2a6d67; /* Grigio chiaro */
+  --color-primary-light: #3A2E41FF; /* Nero carbone */
+  --color-secondary-light: #C2A8C5FF; /* Bianco puro */
+  --color-tertiary-light: #536866FF; /* Grigio chiaro */
 
   /* Dark Mode */
-  --color-primary-dark: #86EFAC; /* Ciano neon */
+  --color-primary-dark: #59E48CFF; /* Ciano neon */
   --color-secondary-dark: #101010; /* Nero carbone */
-  --color-tertiary-dark: #303030; /* Grigio scuro */
+  --color-tertiary-dark: #070007FF; /* Grigio scuro */
+
+   /* Connect WEB3-RAINBOW Button */
+   --color-button-light: #684580FF; /* Ciano neon */
+   --color-button-dark: #684580FF; /* Ciano neon */
+
 }
+

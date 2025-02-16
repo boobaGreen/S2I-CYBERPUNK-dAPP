@@ -19,7 +19,7 @@ const useUserRole = () => {
 
                 // Ottieni l'indirizzo del proprietario
                 const ownerAddress = await contract.owner();
-                console.log(`Owner address: ${ownerAddress}`);
+       
 
                 // Confronta l'indirizzo del proprietario con l'indirizzo dell'utente corrente
                 const userAddress = await signer.getAddress();

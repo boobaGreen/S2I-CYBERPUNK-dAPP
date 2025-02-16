@@ -4,6 +4,7 @@ import { getContractInstance } from '../utils/getContractInstance';
 import useUserRole from '../hooks/useUserRole';
 import { ProductState } from '../types/IProduct';
 import OrderTable from '../components/OrderTable';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function MyOrders() {
   const { address, isConnected } = useAccount();
@@ -40,7 +41,7 @@ export default function MyOrders() {
         }
       }
 
-      console.log('Fetched Orders:', orders); // Log the fetched orders
+  
       setOrders(orders);
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -53,7 +54,7 @@ export default function MyOrders() {
 
   const handleShip = async (id: any) => {
     try {
-      const { contract, signer } = await getContractInstance('CyberPunkModule#CyberPunkBoutique');
+      const { contract } = await getContractInstance('CyberPunkModule#CyberPunkBoutique');
       const trackingNumber = trackingNumbers[id] || 'tracking123'; // Use the entered tracking number or a default value
       const tx = await contract.shipProduct(id, trackingNumber);
       await tx.wait();
@@ -104,28 +105,48 @@ export default function MyOrders() {
   });
 
   return (
-    <div className='container mx-auto p-4'>
-      <h1 className='text-2xl font-bold mb-4'>My Orders</h1>
-      {isVendor && (
-        <div className='flex justify-end mb-4'>
-          <button
-            className='bg-blue-500 text-white py-1 px-3 rounded'
-            onClick={setPurchasedNotShippedFilter}
-          >
-            Autofilter : To Ship
-          </button>
+    <div className='relative min-h-screen'>
+      <div
+        className={`absolute inset-0 bg-cover bg-center ${!isConnected ? 'blur-sm' : ''}`}
+        style={{ backgroundImage: "url('/cover.webp')" }}
+      ></div>
+      <div className='absolute inset-0 bg-tertiary-light dark:bg-tertiary-dark opacity-90'></div>
+      {!isConnected && (
+        <div className='absolute inset-0 flex flex-col items-center justify-center z-20'>
+          <ConnectButton />
+          <p className='font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-10'>
+            Connect your wallet
+          </p>
+          <p className='font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-4'>
+            to view your orders ...
+          </p>
         </div>
       )}
-      <div className='overflow-x-auto'>
-        <OrderTable
-          orders={filteredOrders}
-          isVendor={isVendor}
-          trackingNumbers={trackingNumbers}
-          handleTrackingNumberChange={handleTrackingNumberChange}
-          handleShip={handleShip}
-          filters={filters}
-          handleFilterChange={handleFilterChange}
-        />
+      <div
+        className={`${!isConnected ? 'blur-sm' : ''} container mx-auto p-4 min-h-screen relative z-10`}
+      >
+        <h1 className='text-2xl font-bold mb-4'>My Orders</h1>
+        {isVendor && (
+          <div className='flex justify-end mb-4'>
+            <button
+              className='bg-blue-500 text-white py-1 px-3 rounded'
+              onClick={setPurchasedNotShippedFilter}
+            >
+              Autofilter : To Ship
+            </button>
+          </div>
+        )}
+        <div className='overflow-x-auto'>
+          <OrderTable
+            orders={filteredOrders}
+            isVendor={isVendor}
+            trackingNumbers={trackingNumbers}
+            handleTrackingNumberChange={handleTrackingNumberChange}
+            handleShip={handleShip}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+          />
+        </div>
       </div>
     </div>
   );

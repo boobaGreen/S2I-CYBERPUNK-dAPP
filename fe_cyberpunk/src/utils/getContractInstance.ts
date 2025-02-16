@@ -9,8 +9,7 @@ export const getContractInstance = async (contractName: string) => {
 
     // Ottieni la rete corrente
     const network = await provider.getNetwork();
-    console.log("networkChainId", network.chainId);
-    console.log("contractName", contractName);
+ 
     const contractAddress = await getContractAddress(Number(network.chainId), contractName);
 
     const contractABI = getContractABI();

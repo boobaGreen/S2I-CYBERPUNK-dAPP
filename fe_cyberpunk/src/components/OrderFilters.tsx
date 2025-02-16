@@ -54,7 +54,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
         name='purchase'
         value={filters.purchase}
         onChange={handleFilterChange}
-        className='p-1 border rounded w-full bg-blue-700'
+        className='p-1 border rounded w-full bg-transparent'
       >
         <option value='all'>All</option>
         <option value='yes'>Purchased</option>
@@ -66,7 +66,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
         name='shipped'
         value={filters.shipped}
         onChange={handleFilterChange}
-        className='p-1 border rounded w-full bg-blue-700'
+        className='p-1 border rounded w-full bg-transparent'
       >
         <option value='all'>All</option>
         <option value='yes'>Shipped</option>

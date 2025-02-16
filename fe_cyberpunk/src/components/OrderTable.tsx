@@ -31,11 +31,6 @@ const OrderTable: React.FC<OrderTableProps> = ({
 }) => {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-  const formatDescription = (description: string) => {
-    if (description.length <= 10) return description;
-    return `${description.slice(0, 5)}...${description.slice(-5)}`;
-  };
-
   const handleSort = () => {
     setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
   };
@@ -48,7 +43,7 @@ const OrderTable: React.FC<OrderTableProps> = ({
 
   return (
     <table className='min-w-full border border-gray-200'>
-      <thead className='bg-gray-100 dark:bg-gray-800'>
+      <thead className=''>
         <tr>
           <th className='py-2 px-4 border-b'>Product</th>
           <th className='py-2 px-4 border-b'>Price</th>
@@ -65,7 +60,7 @@ const OrderTable: React.FC<OrderTableProps> = ({
       </thead>
       <tbody>
         {sortedOrders.map((product) => (
-          <tr key={product.id} className='hover:bg-gray-100 dark:hover:bg-gray-700'>
+          <tr key={product.id} className='hover:bg-secondary-light dark:hover:bg-gray-700'>
             <td className='py-2 px-4 border-b text-center'>{product.name}</td>
             <td className='py-2 px-4 border-b text-center'>
               {ethers.formatEther(product.price)} ETH

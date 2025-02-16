@@ -10,14 +10,17 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme(); // Usa il custom hook per ottenere il tema
   const location = useLocation(); // Usa useLocation per ottenere il percorso corrente
 
-  const logoSrc = theme === 'dark' ? './cyberpunk-logo-dark.webp' : './cyberpunk-logo.webp'; // Imposta il logo in base al tema
-
   return (
     <Disclosure as='nav' className='bg-transparent'>
       {({}) => (
         <>
+          <div className='relative flex items-center justify-end px-2 md:px-6 lg:px-8 py-6'>
+            <div className='flex items-center'>
+              <ConnectButton showBalance={true} />
+            </div>
+          </div>
           <div className='mx-auto px-2 md:px-6 lg:px-8 py-6'>
-            <div className='relative flex h-16 items-center justify-between'>
+            <div className='relative flex flex-col sm:flex-row sm:items-center sm:justify-between'>
               <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
                 <DisclosureButton className='group relative inline-flex items-center justify-center rounded-md p-2 text-secondary-light  focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset'>
                   <span className='absolute -inset-0.5' />
@@ -26,12 +29,16 @@ export default function Header() {
                   <XMarkIcon aria-hidden='true' className='hidden h-6 w-6 group-data-open:block' />
                 </DisclosureButton>
               </div>
-              <div className='flex flex-1 items-center justify-center sm:items-stretch sm:justify-start'>
-                <div className='hidden sm:flex shrink-0 items-center hover:cursor-pointer'>
+              <div className='flex flex-1 items-center justify-center sm:items-stretch sm:justify-start mt-6 sm:mt-0'>
+                <div className='flex items-center hover:cursor-pointer'>
                   <Link to='/'>
-                    <div className='flex items-center flex-col'>
-                      <img alt='Your Company' src={logoSrc} className='h-8 w-auto' />
-                      <p>CBS</p>
+                    <div className='flex items-center justify-center text-2xl font-semibold text-gray-900 dark:text-gray-100'>
+                      <img
+                        src='https://www.svgrepo.com/show/499962/music.svg'
+                        className='h-12 mr-3 sm:h-9'
+                        alt='CYBERPUNK Logo'
+                      />
+                      CyberPunk
                     </div>
                   </Link>
                 </div>
@@ -66,13 +73,10 @@ export default function Header() {
                   </div>
                 </div>
               </div>
-              <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
-                <ConnectButton showBalance={true} />
-              </div>
             </div>
           </div>
 
-          <DisclosurePanel className='absolute top-16 left-0 right-0 bg-secondary-dark  z-50 sm:hidden'>
+          <DisclosurePanel className='absolute top-16 left-0 right-0 bg-secondary-dark z-50 sm:hidden'>
             <div className='space-y-1 px-2 pt-2 pb-3 mt-6'>
               {navigation.map((item) => (
                 <DisclosureButton
