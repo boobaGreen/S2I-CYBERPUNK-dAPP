@@ -7,9 +7,10 @@ import { IProduct } from '../types/IProduct';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import { fetchProducts, handleBuy } from '../utils/productUtils';
+import useUserRole from '../hooks/useUserRole';
 
 export default function Products() {
-  // const { isVendor } = useUserRole();
+  const { isVendor } = useUserRole();
   const { isConnected } = useAccount();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,9 +44,8 @@ export default function Products() {
           <ConnectButton />
         </div>
       )}
-      {/* // provvisorio x cv cesenatico *************************************** */}
-      {/* {isVendor && ( */}
-      {true && (
+
+      {isVendor && (
         <div className='flex justify-center p-4'>
           <Button onClick={openModal}>+ Add New Product</Button>
         </div>
