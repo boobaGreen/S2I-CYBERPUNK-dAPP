@@ -1,14 +1,10 @@
 export const getContractABI = async () => {
-  let abi;
-  if (import.meta.env.MODE === 'production') {
-    console.log('Loading production ABI');
-    abi = await import('./abis/CyberPunkBoutique.json');
-  } else if (import.meta.env.MODE === 'development') {
-    console.log('Loading development ABI');
-    abi = await import('../../../be_cyberpunk/artifacts/contracts/CyberPunk.sol/CyberPunkBoutique.json');
-  } else {
-    console.log('Loading default ABI');
-    abi = await import('./abis/CyberPunkBoutique.json');
-  }
+  console.log('Loading development ABI');
+  // Costruisci il percorso in modo dinamico per evitare la risoluzione statica durante la build
+  const basePath = '../../../be_cyberpunk/artifacts/contracts/CyberPunk.sol';
+  const fileName = '/CyberPunkBoutique.json';
+  const devPath = basePath + fileName;
+
+  const abi = await import(devPath);
   return abi;
 };
