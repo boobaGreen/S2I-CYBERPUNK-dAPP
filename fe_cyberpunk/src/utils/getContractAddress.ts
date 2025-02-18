@@ -1,4 +1,6 @@
+
 import loadDeployedAddresses from './loadDeployedAddresses';
+
 
 export const getContractAddress = async (networkChainId: number, contractName: string): Promise<string> => {
     // Se non siamo connessi o il chainId non è valido, usa il default di Sepolia (11155111)
@@ -8,13 +10,16 @@ export const getContractAddress = async (networkChainId: number, contractName: s
 
     let contractAddress: string | undefined;
 
-    try {
-        const deployedAddresses: { [key: string]: string } = loadDeployedAddresses(networkChainId);
-        contractAddress = deployedAddresses[contractName];
-        console.log('Loaded deployedAddresses:', deployedAddresses);
-    } catch (error) {
-        console.warn('Failed to load deployed addresses, falling back to environment variable');
-        contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
+    if (!(import.meta.env.VITE_ENV_MODE === "production")) {
+
+        try {
+            const deployedAddresses: { [key: string]: string } = loadDeployedAddresses(networkChainId);
+            contractAddress = deployedAddresses[contractName];
+            console.log('Loaded deployedAddresses:', deployedAddresses);
+        } catch (error) {
+            console.warn('Failed to load deployed addresses, falling back to environment variable');
+            contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
+        }
     }
 
     if (!contractAddress) {
