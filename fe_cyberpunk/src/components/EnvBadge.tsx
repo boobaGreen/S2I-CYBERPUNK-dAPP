@@ -13,6 +13,7 @@ export default function EnvBadge() {
         // Usa il chain id se disponibile, altrimenti default a Sepolia (11155111)
         const chainId = chain?.id || 11155111;
         const address = await getContractAddress(chainId, 'CyberPunkModule#CyberPunkBoutique');
+        console.log('address', address);
         setContractAddress(address);
       } catch (error) {
         setContractAddress('Not available');
