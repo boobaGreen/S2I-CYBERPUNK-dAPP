@@ -10,6 +10,7 @@ export const getContractInstance = async (contractName: string) => {
     const network = await provider.getNetwork();
     const contractAddress = await getContractAddress(Number(network.chainId), contractName);
     console.log('contractAddress --in getContractInstance :', contractAddress);
+
     const contractABI = getContractABI();
     const contract = new ethers.Contract(
         contractAddress,
