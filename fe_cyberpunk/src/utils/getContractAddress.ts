@@ -1,8 +1,9 @@
-
 import loadDeployedAddresses from './loadDeployedAddresses';
 
-
-export const getContractAddress = async (networkChainId: number, contractName: string): Promise<string> => {
+export const getContractAddress = async (
+    networkChainId: number,
+    contractName: string
+): Promise<string> => {
     // Se non siamo connessi o il chainId non è valido, usa il default di Sepolia (11155111)
     if (!networkChainId || networkChainId === 0) {
         networkChainId = 11155111;
@@ -10,8 +11,12 @@ export const getContractAddress = async (networkChainId: number, contractName: s
 
     let contractAddress: string | undefined;
 
-    if (!(import.meta.env.VITE_ENV_MODE === "production")) {
-
+    if (import.meta.env.VITE_ENV_MODE === "production") {
+        // In produzione, utilizziamo la variabile d'ambiente
+        contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
+        console.log('Production mode, using VITE_CONTRACT_ADDRESS:', contractAddress);
+    } else {
+        // In sviluppo usiamo il file JSON dei deployed addresses
         try {
             const deployedAddresses: { [key: string]: string } = loadDeployedAddresses(networkChainId);
             contractAddress = deployedAddresses[contractName];
