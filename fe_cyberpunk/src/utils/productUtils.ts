@@ -21,7 +21,7 @@ export const fetchProducts = async (): Promise<IProduct[]> => {
 
 
         const contract = new ethers.Contract(contractAddress, CyberPunkBoutique.abi, provider);
-        console.log("contractAddress", contractAddress);
+
 
         // Ottieni il numero totale di prodotti
         const productCount = await contract.productCount();

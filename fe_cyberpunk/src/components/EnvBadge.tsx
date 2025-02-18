@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
+import { useAccount } from 'wagmi';
 import { getContractAddress } from '../utils/getContractAddress';
 
 export default function EnvBadge() {
   const envMode = import.meta.env.VITE_ENV_MODE || 'local';
   const [contractAddress, setContractAddress] = useState<string>('Loading...');
+  const { chain } = useAccount();
 
   useEffect(() => {
     async function fetchAddress() {
       try {
-        // Assumiamo che il contratto si chiami 'CyberPunkModule#CyberPunkBoutique'
-        // E networkChainId venga ottenuto dal provider all'interno di getContractAddress
-        const address = await getContractAddress(0, 'CyberPunkModule#CyberPunkBoutique');
+        // Usa il chain id se disponibile, altrimenti default a Sepolia (11155111)
+        const chainId = chain?.id || 11155111;
+        const address = await getContractAddress(chainId, 'CyberPunkModule#CyberPunkBoutique');
         setContractAddress(address);
       } catch (error) {
         setContractAddress('Not available');
@@ -18,7 +20,7 @@ export default function EnvBadge() {
       }
     }
     fetchAddress();
-  }, []);
+  }, [chain]);
 
   return (
     <div className='absolute top-0 right-0 m-2 z-50'>

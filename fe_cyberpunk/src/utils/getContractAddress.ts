@@ -4,25 +4,29 @@ export const getContractAddress = async (networkChainId: number, contractName: s
     let contractAddress: string | undefined;
 
     if (import.meta.env.MODE === 'development') {
+        console.log("chainId:", networkChainId);
         try {
-            // In sviluppo carichiamo gli indirizzi dall'apposita cartella
+            // Se non siamo connessi (networkChainId non valido o 0), assumiamo il default di Sepolia (11155111)
+            if (!networkChainId || networkChainId === 0) {
+                networkChainId = 11155111;
+            }
             const deployedAddresses: { [key: string]: string } = loadDeployedAddresses(networkChainId);
             contractAddress = deployedAddresses[contractName];
-            console.log("Contract address (development):", contractAddress);
+
         } catch (error) {
             console.warn('Failed to load deployed addresses, falling back to environment variable');
             contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
         }
     } else {
-        // In produzione leggo sempre dalla variabile ENV
+        // In produzione uso la variabile d'ambiente
         contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
-        console.log("Contract address (production):", contractAddress);
+
     }
 
     if (!contractAddress) {
         throw new Error('Contract address not found');
     }
 
-    console.log("Final contractAddress:", contractAddress);
+
     return contractAddress;
 };

@@ -16,7 +16,7 @@ export const getContractInstance = async (contractName: string) => {
         (await contractABI).abi,
         signer
     );
-    console.log("Contract instance:", contract);
+
 
     return { contract, signer, network, provider };
 };
