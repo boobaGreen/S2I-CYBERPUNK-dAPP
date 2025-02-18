@@ -11,6 +11,7 @@ export const getContractAddress = async (networkChainId: number, contractName: s
     try {
         const deployedAddresses: { [key: string]: string } = loadDeployedAddresses(networkChainId);
         contractAddress = deployedAddresses[contractName];
+        console.log('deployedAddresses- da getContractAddress.ts', deployedAddresses);
     } catch (error) {
         console.warn('Failed to load deployed addresses, falling back to environment variable');
         contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
