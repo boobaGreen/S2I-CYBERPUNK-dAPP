@@ -1,52 +1,68 @@
 [
     {
-      "name": "CyberPunk T-Shirt 1",
-      "price": "2.5",
-      "cid": "bafkreifix46z2d4zxy46sml6flcrweqfolbimdejs6ii7i47v6y26l2mae"
+      "name": "Jacket",
+      "price": "1.2",
+      "cid": "bafybeicdha3nfprzbwkuqlhbefh3riej23tw23qabm2b2digy2iuabsy2a"
     },
     {
-      "name": "CyberPunk T-Shirt 2",
-      "price": "3.0",
-      "cid": "bafkreifargu6yeziavpsxn22bcnmk7jul5kvlnpaflx2mrsmt4jg25gg6u"
+      "name": "Sweatshirt",
+      "price": "0.3",
+      "cid": "bafybeickuwacohdaxn2auysvkidre4rygp3yhx6ro6moglzolrkwttimwq"
     },
     {
-      "name": "CyberPunk T-Shirt 3",
+      "name": "Shoe",
+      "price": "0.8",
+      "cid": "bafybeib4ftn2aswcj4y6xi63k44buvhguwmgvlmammxx4ws6i4lsvisnzi"
+    },
+    {
+      "name": "Backpack-Trolley",
+      "price": "1.0",
+      "cid": "bafybeihn6balbtctbdjzdbzsxgvt472dltr4sa4gmtvyuntjxn3lo2gtla"
+    },
+    {
+      "name": "Glass",
+      "price": "0.4",
+      "cid": "bafybeietgnmj5z6ozt7gkfolii57hxcnxuvtjs277t4b6ny5k5toqt3wd4"
+    },
+    {
+      "name": "SmartWatch",
       "price": "1.5",
-      "cid": "bafkreihrhkgcvmqlre4h3wzgk44r4dtonqzdbrrsdenimref72fcp5arja"
+      "cid": "bafybeihubj6nvkgeab7phhyfzhcebt4lezeuwyeobcwxf2dp743ija5fyy"
     },
     {
-      "name": "CyberPunk T-Shirt 4",
-      "price": "2.0",
-      "cid": "bafkreif662h2dpg2zy3cx4iiagsdjdm47vkj3c6pwtn2strmavreonryoq"
+      "name": "Gloves",
+      "price": "0.25",
+      "cid": "bafybeid5ebmlwcvrjybm5nzvoa6e4f7weoh46m74sxjvmih5xxwxlbvssi"
     },
     {
-      "name": "CyberPunk T-Shirt 5",
-      "price": "2.8",
-      "cid": "bafkreicuj74xijgegc4ac6pr7t4qgl6oh5sx6jbwh6rxfb3oundqombegq"
+      "name": "Hood",
+      "price": "0.15",
+      "cid": "bafybeigunl3fjyfmk7zi5rglknbe3jvfflqsahyj475gb4q7grpn2vzzra"
     },
     {
-      "name": "CyberPunk T-Shirt 6",
-      "price": "3.2",
-      "cid": "bafkreicanimslhm6jzsv426z6quzvtet2bls3v73tinjceermrgfabq2w4"
+      "name": "Sweatshirt Reprise",
+      "price": "0.35",
+      "cid": "bafybeibucl45r2nidmibxfmo3jxrmq3gq44ylynzk7ghmpu6kss47up5py"
     },
     {
-      "name": "CyberPunk T-Shirt 7",
-      "price": "1.8",
-      "cid": "bafkreifiicrk7y2fbmz7po2ou4eklmnydkeggec22izhct42cejkumkzry"
+      "name": "Glass Reprise",
+      "price": "0.45",
+      "cid": "bafybeiej73l5zuemsa7bxo5227wwfdj4fturidbtdvqe3shu5bncnetb5m"
     },
     {
-      "name": "CyberPunk T-Shirt 8",
-      "price": "2.1",
-      "cid": "bafkreiaz7nk6cuq7ttna5jygluwxvlp2vj6d6aqqty2ct7uzrr4yfaxx5y"
+      "name": "Shoe Reprise",
+      "price": "0.85",
+      "cid": "bafybeihwwfwpywyeiqs6xj5zfu32pgxagw6kxhsev6oocvftttr6d4hckq"
     },
     {
-      "name": "CyberPunk T-Shirt 9",
-      "price": "2.9",
-      "cid": "bafkreidfc5n3foviommqpwiz3u6bhwsyfvdjv5ej6zbqubjphdpaumevum"
+      "name": "SmartWatch Reprise",
+      "price": "2",
+      "cid": "bafybeigpirzr3wlo2viqj5sv7w2v2awoz735wrrga3eev6koa6b2b3cb4e"
     },
     {
-      "name": "CyberPunk T-Shirt 10",
-      "price": "3.5",
-      "cid": "bafkreibqkbkv2jwommkug6wltaqqnk2iudh2744ixeafrotu3eb52aqkzq"
+      "name": "Backpack",
+      "price": "0.5",
+      "cid": "bafybeielexy7j2t5pcma6mksvv36jopwntfqlwjdoulfffgodtdsnqwnga"
     }
+    
   ]
