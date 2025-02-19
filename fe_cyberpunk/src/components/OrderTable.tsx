@@ -42,7 +42,7 @@ const OrderTable: React.FC<OrderTableProps> = ({
   });
 
   return (
-    <table className='min-w-full border border-gray-200'>
+    <table className='min-w-full border border-gray-200 bg-amber-300'>
       <thead className=''>
         <tr>
           <th className='py-2 px-4 border-b'>Product</th>
@@ -60,7 +60,7 @@ const OrderTable: React.FC<OrderTableProps> = ({
       </thead>
       <tbody>
         {sortedOrders.map((product) => (
-          <tr key={product.id} className='hover:bg-secondary-light dark:hover:bg-gray-700'>
+          <tr key={product.id} className='hover:bg-secondary-light dark:hover:bg-gray-700 '>
             <td className='py-2 px-4 border-b text-center'>{product.name}</td>
             <td className='py-2 px-4 border-b text-center'>
               {ethers.formatEther(product.price)} ETH

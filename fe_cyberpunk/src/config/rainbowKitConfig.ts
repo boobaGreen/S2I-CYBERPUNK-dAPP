@@ -8,4 +8,5 @@ export const rainbowKitConfig = getDefaultConfig({
     projectId: projectId,
     chains: [mainnet, sepolia, localhost, polygon],
     // ssr: true, // If your dApp uses server side rendering (SSR)
+
 });

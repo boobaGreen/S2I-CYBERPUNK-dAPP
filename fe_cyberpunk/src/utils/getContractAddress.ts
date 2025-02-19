@@ -14,13 +14,13 @@ export const getContractAddress = async (
     if (import.meta.env.VITE_ENV_MODE === "production") {
         // In produzione, utilizziamo la variabile d'ambiente
         contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
-        console.log('Production mode, using VITE_CONTRACT_ADDRESS:', contractAddress);
+
     } else {
         // In sviluppo usiamo il file JSON dei deployed addresses
         try {
             const deployedAddresses: { [key: string]: string } = loadDeployedAddresses(networkChainId);
             contractAddress = deployedAddresses[contractName];
-            console.log('Loaded deployedAddresses:', deployedAddresses);
+
         } catch (error) {
             console.warn('Failed to load deployed addresses, falling back to environment variable');
             contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;

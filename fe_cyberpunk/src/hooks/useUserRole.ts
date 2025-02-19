@@ -22,8 +22,12 @@ const useUserRole = () => {
 
 
                 // Confronta l'indirizzo del proprietario con l'indirizzo dell'utente corrente
-                const userAddress = await signer.getAddress();
-                setIsVendor(userAddress.toLowerCase() === ownerAddress.toLowerCase());
+                if (signer) {
+                    const userAddress = await signer.getAddress();
+                    setIsVendor(userAddress.toLowerCase() === ownerAddress.toLowerCase());
+                } else {
+                    console.error('Signer is undefined');
+                }
             } catch (error) {
                 console.error('Error fetching owner address:', error);
             } finally {

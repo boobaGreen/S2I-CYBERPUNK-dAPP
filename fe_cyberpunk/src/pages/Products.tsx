@@ -1,41 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Gallery from '../components/Gallery';
-
 import Button from '../components/Button';
 import AddProductModal from '../components/AddProductModal';
-import { IProduct } from '../types/IProduct';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
-import { fetchProducts, handleBuy } from '../utils/productUtils';
+import { handleBuy } from '../utils/productUtils';
 import useUserRole from '../hooks/useUserRole';
+import { useProducts } from '../hooks/useProducts';
 
 export default function Products() {
   const { isVendor } = useUserRole();
   const { isConnected } = useAccount();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: products = [], isLoading, refetch } = useProducts();
 
   const openModal = () => setIsModalOpen(true);
+
   const closeModal = () => {
     setIsModalOpen(false);
-    loadProducts(); // Refetch products when the modal is closed
+    refetch();
   };
-
-  const loadProducts = async () => {
-    try {
-      const products = await fetchProducts();
-      setProducts(products);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadProducts();
-  }, []);
 
   return (
     <div className='relative min-h-screen'>
@@ -50,17 +35,19 @@ export default function Products() {
           <Button onClick={openModal}>+ Add New Product</Button>
         </div>
       )}
+
       <div className={`${isModalOpen ? 'blur-sm' : ''}`}>
-        {loading ? (
-          <p>Loading products...</p>
+        {isLoading ? (
+          <p className='text-center p-4'>Loading products...</p>
         ) : (
           <Gallery
             products={products}
-            onBuy={(productId, price) => handleBuy(productId, price, products, setProducts)}
+            onBuy={(productId, price) => handleBuy(productId, price, products, () => refetch())}
             isBuyButtonVisible={isConnected}
           />
         )}
       </div>
+
       {isModalOpen && <AddProductModal closeModal={closeModal} />}
     </div>
   );

@@ -1,0 +1,1 @@
+export const getCoverImage = (): string => '/cover.webp';

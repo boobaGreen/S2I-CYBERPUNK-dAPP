@@ -5,6 +5,7 @@ import useUserRole from '../hooks/useUserRole';
 import { ProductState } from '../types/IProduct';
 import OrderTable from '../components/OrderTable';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { getCoverImage } from '../constants/coverImage';
 
 export default function MyOrders() {
   const { address, isConnected } = useAccount();
@@ -41,7 +42,6 @@ export default function MyOrders() {
         }
       }
 
-  
       setOrders(orders);
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -80,7 +80,7 @@ export default function MyOrders() {
       description: '',
       purchase: 'yes',
       shipped: 'no',
-      tracking: '', // Add tracking filter
+      tracking: '',
     });
   };
 
@@ -108,24 +108,28 @@ export default function MyOrders() {
     <div className='relative min-h-screen'>
       <div
         className={`absolute inset-0 bg-cover bg-center ${!isConnected ? 'blur-sm' : ''}`}
-        style={{ backgroundImage: "url('/cover.webp')" }}
+        style={{ backgroundImage: `url('${getCoverImage()}')` }}
       ></div>
-      <div className='absolute inset-0 bg-tertiary-light dark:bg-tertiary-dark opacity-90'></div>
+      <div className='absolute inset-0'></div>
+      // Nella parte in cui non è connesso, sostituisci il fallback con:
       {!isConnected && (
-        <div className='absolute inset-0 flex flex-col items-center justify-center z-20'>
-          <ConnectButton />
-          <p className='font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-10'>
-            Connect your wallet
-          </p>
-          <p className='font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mt-4'>
-            to view your orders ...
-          </p>
+        <div className='absolute inset-0 flex justify-center items-center z-20 text-white'>
+          <div className='relative flex flex-col items-center justify-start pt-20 md:pt-30 xl:pt-40 lg:pt-50 h-full px-12 sm:px-14 md:px-16 lg:px-18 xl:px-20 2xl:px-40'>
+            <div className='bg-tertiary-light dark:bg-tertiary-dark p-12 rounded-4xl mb-14 opacity-80'>
+              <h1 className='text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-8xl font-bold mb-14 '>
+                To view
+              </h1>
+              <h1 className='text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-8xl font-bold  '>
+                your orders
+              </h1>
+            </div>
+            <ConnectButton />
+          </div>
         </div>
       )}
       <div
         className={`${!isConnected ? 'blur-sm' : ''} container mx-auto p-4 min-h-screen relative z-10`}
       >
-        <h1 className='text-2xl font-bold mb-4'>My Orders</h1>
         {isVendor && (
           <div className='flex justify-end mb-4'>
             <button
@@ -136,17 +140,19 @@ export default function MyOrders() {
             </button>
           </div>
         )}
-        <div className='overflow-x-auto'>
-          <OrderTable
-            orders={filteredOrders}
-            isVendor={isVendor}
-            trackingNumbers={trackingNumbers}
-            handleTrackingNumberChange={handleTrackingNumberChange}
-            handleShip={handleShip}
-            filters={filters}
-            handleFilterChange={handleFilterChange}
-          />
-        </div>
+        {isConnected && (
+          <div className='overflow-x-auto'>
+            <OrderTable
+              orders={filteredOrders}
+              isVendor={isVendor}
+              trackingNumbers={trackingNumbers}
+              handleTrackingNumberChange={handleTrackingNumberChange}
+              handleShip={handleShip}
+              filters={filters}
+              handleFilterChange={handleFilterChange}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

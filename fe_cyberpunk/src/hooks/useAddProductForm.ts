@@ -46,8 +46,12 @@ const useAddProductForm = () => {
                 let transaction;
                 if (Number(network.chainId) === 1337) {
                     // Ottieni il nonce corrente per la rete locale
-                    const nonce = await provider.getTransactionCount(signer.getAddress());
-                    transaction = await contract.createProduct(values.name, priceInWei, values.cid, { nonce });
+                    if (signer) {
+                        const nonce = await provider.getTransactionCount(signer.getAddress());
+                        transaction = await contract.createProduct(values.name, priceInWei, values.cid, { nonce });
+                    } else {
+                        throw new Error('Signer is undefined');
+                    }
                 } else {
                     // Non specificare il nonce per Sepolia e Mainnet
                     transaction = await contract.createProduct(values.name, priceInWei, values.cid);

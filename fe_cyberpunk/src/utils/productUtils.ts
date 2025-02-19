@@ -6,7 +6,7 @@ import { getContractInstance } from './getContractInstance';
 export const fetchProducts = async (): Promise<IProduct[]> => {
     try {
         // Usa la utility per ottenere il contratto con il deployed address corretto
-        const { contract } = await getContractInstance('CyberPunkModule#CyberPunkBoutique');
+        const { contract } = await getContractInstance('CyberPunkModule#CyberPunkBoutique', false);
 
         // Ottieni il numero totale di prodotti
         const productCount = await contract.productCount();

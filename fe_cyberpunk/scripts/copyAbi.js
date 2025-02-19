@@ -8,7 +8,7 @@ const __dirname = dirname(__filename);
 // Percorso sorgente: file ABI in be_cyberpunk
 const srcPath = resolve(__dirname, '../../be_cyberpunk/artifacts/contracts/CyberPunk.sol/CyberPunkBoutique.json');
 // Percorso di destinazione: all'interno di fe_cyberpunk/src/abis
-const destDir = resolve(__dirname, '../fe_cyberpunk/src/abis');
+const destDir = resolve(__dirname, './abis');
 const destPath = join(destDir, 'CyberPunkBoutique.json');
 
 // Crea la cartella di destinazione se non esiste
